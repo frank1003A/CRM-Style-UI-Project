@@ -23,27 +23,42 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Separator } from "../ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 const ToolbarButton = ({
   children,
   border = false,
   onClick,
+  toolTip,
 }: {
   children: React.JSX.Element;
   border?: boolean;
   onClick?: () => void;
+  toolTip?: string;
 }) => {
   return (
-    <button
-      onClick={onClick}
-      className={cn(
-        "px-2 py-1 flex items-center justify-center gap-2 text-sm rounded-sm border",
-        border ? "border-border" : "border-transparent",
-        "hover:border-border"
-      )}
-    >
-      {children}
-    </button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          onClick={onClick}
+          className={cn(
+            "px-2 py-1 flex items-center justify-center gap-2 text-sm rounded-sm border",
+            border ? "border-border" : "border-transparent",
+            "hover:border-border"
+          )}
+        >
+          {children}
+        </button>
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{toolTip}</p>
+      </TooltipContent>
+    </Tooltip>
   );
 };
 
@@ -73,7 +88,7 @@ const ToolbarDropdown = ({
             "px-2 py-1 flex items-center justify-center gap-2 text-sm rounded-sm border border-transparent hover:border-border data-[state=open]:border-border focus-visible:border-border"
           )}
         >
-          {icon}
+          <span>{icon}</span>
           <span>{label}</span>
           <Separator className="h-5 mr-0" orientation="vertical" />
           <ChevronDown className="w-4 h-4" />
@@ -86,8 +101,8 @@ const ToolbarDropdown = ({
             onClick={item.onClick}
             className="flex items-center gap-2"
           >
-            {item.icon}
-            {item.label}
+            <span>{item.icon}</span>
+            <span>{item.label}</span>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
@@ -103,163 +118,168 @@ const TopBar = ({
   toggleExpand: () => void;
 }) => {
   return (
-    <div className="bg-white w-full shadow-md rounded-[5px] p-1 flex items-center overflow-x-auto">
-      <ToolbarButton onClick={toggleExpand}>
-        <>
-          My open leads
-          <ChevronDown
-            className={cn(
-              expand ? "rotate-180" : "rotate-0",
-              "ml-auto transition-all w-4 h-4"
-            )}
+    <TooltipProvider>
+      <div className="bg-white w-full shadow-md rounded-[5px] p-1 flex items-center overflow-x-auto">
+        <ToolbarButton toolTip="My Open Leads" onClick={toggleExpand}>
+          <>
+            <span className="md:hidden">Leads</span>
+            <span className="hidden xl:inline">My open leads</span>
+            <ChevronDown
+              className={cn(
+                expand ? "rotate-180" : "rotate-0",
+                "ml-auto transition-all w-4 h-4"
+              )}
+            />
+          </>
+        </ToolbarButton>
+        <div className="flex gap-1 items-center ml-auto md:hidden">
+          <ToolbarButton toolTip="New Lead">
+            <>
+              <Plus className="w-4 h-4" />
+            </>
+          </ToolbarButton>
+          <ToolbarButton toolTip="Refresh">
+            <>
+              <RotateCw className="w-4 h-4" />
+            </>
+          </ToolbarButton>
+          <ToolbarDropdown
+            label=""
+            className="mr-2"
+            icon={<MoreHorizontal className="w-4 h-4" />}
+            items={[
+              {
+                icon: <ShieldHalf className="w-4 h-4" />,
+                label: "Collaborate",
+              },
+              {
+                icon: <Trash2 className="w-4 h-4" />,
+                label: "Delete",
+              },
+              {
+                icon: <ChartArea className="w-4 h-4" />,
+                label: "Show chart",
+              },
+              {
+                icon: <List className="w-4 h-4" />,
+                label: "Focused View",
+              },
+            ]}
           />
-        </>
-      </ToolbarButton>
-      <div className="flex gap-1 items-center ml-auto md:hidden">
-        <ToolbarDropdown
-          label="More"
-          className="mr-2"
-          icon={<MoreHorizontal className="w-4 h-4" />}
-          items={[
-            {
-              icon: <Plus className="w-4 h-4" />,
-              label: "New",
-            },
-            {
-              icon: <ShieldHalf className="w-4 h-4" />,
-              label: "Collaborate",
-            },
-            {
-              icon: <Trash2 className="w-4 h-4" />,
-              label: "Delete",
-            },
-            {
-              icon: <ChartArea className="w-4 h-4" />,
-              label: "Show chart",
-            },
-            {
-              icon: <List className="w-4 h-4" />,
-              label: "Focused View",
-            },
-            {
-              icon: <RotateCw className="w-4 h-4" />,
-              label: "Refresh",
-            },
-          ]}
-        />
-      </div>
-      <div className="gap-1 items-center ml-auto hidden md:flex xl:hidden">
-        <ToolbarButton>
-          <>
-            <Plus className="w-4 h-4" /> New
-          </>
-        </ToolbarButton>
-        <ToolbarDropdown
-          label="More"
-          icon={<MoreHorizontal className="w-4 h-4" />}
-          items={[
-            {
-              icon: <ShieldHalf className="w-4 h-4" />,
-              label: "Collaborate",
-            },
-            {
-              icon: <Trash2 className="w-4 h-4" />,
-              label: "Delete",
-            },
-            {
-              icon: <ChartArea className="w-4 h-4" />,
-              label: "Show chart",
-            },
-            {
-              icon: <List className="w-4 h-4" />,
-              label: "Focused View",
-            },
-            {
-              icon: <RotateCw className="w-4 h-4" />,
-              label: "Refresh",
-            },
-          ]}
-        />
-      </div>
-      {/** */}
-      <div className="gap-1 items-center ml-auto hidden xl:flex">
-        <ToolbarButton>
-          <>
-            <Plus className="w-4 h-4" /> New
-          </>
-        </ToolbarButton>
-        <ToolbarButton>
-          <>
-            <RotateCw className="w-4 h-4" /> Refresh
-          </>
-        </ToolbarButton>
-        <ToolbarDropdown
-          label="View"
-          icon={<Eye className="w-4 h-4" />}
-          items={[
-            {
-              icon: <ChartArea className="w-4 h-4" />,
-              label: "Show chart",
-            },
-            {
-              icon: <List className="w-4 h-4" />,
-              label: "Focused View",
-            },
-          ]}
-        />
-        <ToolbarDropdown
-          label="More"
-          icon={<MoreHorizontal className="w-4 h-4" />}
-          items={[
-            {
-              icon: <ShieldHalf className="w-4 h-4" />,
-              label: "Collaborate",
-            },
-            {
-              icon: <Trash2 className="w-4 h-4" />,
-              label: "Delete",
-            },
-          ]}
-        />
-      </div>
-      {/** */}
-      <MoreVertical className="w-4 h-4 mx-3 hidden md:block" />
-      {/** */}
-      <div className="flex gap-1 items-center">
-        <div className="items-center gap-1 hidden lg:flex">
-          <ToolbarButton border>
-            <>
-              <ChartPie className="w-4 h-4" /> Smart data
-            </>
-          </ToolbarButton>
-          <ToolbarButton border>
-            <>
-              <ListFilter className="w-4 h-4" /> Edit filters
-            </>
-          </ToolbarButton>
-          <ToolbarButton border>
-            <>
-              <Columns4 className="w-4 h-4" /> Edit columns
-            </>
-          </ToolbarButton>
         </div>
-        <ToolbarDropdown
-          label=""
-          icon={<Share className="w-4 h-4" />}
-          className="bg-blue-600 text-white"
-          items={[
-            {
-              icon: <Share2 className="w-4 h-4" />,
-              label: "Share as file",
-            },
-            {
-              icon: <Trash2 className="w-4 h-4" />,
-              label: "Delete",
-            },
-          ]}
-        />
+        <div className="gap-1 items-center ml-auto hidden md:flex xl:hidden">
+          <ToolbarButton>
+            <>
+              <Plus className="w-4 h-4" /> New
+            </>
+          </ToolbarButton>
+          <ToolbarDropdown
+            label="More"
+            icon={<MoreHorizontal className="w-4 h-4" />}
+            items={[
+              {
+                icon: <ShieldHalf className="w-4 h-4" />,
+                label: "Collaborate",
+              },
+              {
+                icon: <Trash2 className="w-4 h-4" />,
+                label: "Delete",
+              },
+              {
+                icon: <ChartArea className="w-4 h-4" />,
+                label: "Show chart",
+              },
+              {
+                icon: <List className="w-4 h-4" />,
+                label: "Focused View",
+              },
+              {
+                icon: <RotateCw className="w-4 h-4" />,
+                label: "Refresh",
+              },
+            ]}
+          />
+        </div>
+        {/** */}
+        <div className="gap-1 items-center ml-auto hidden xl:flex">
+          <ToolbarButton>
+            <>
+              <Plus className="w-4 h-4" /> New
+            </>
+          </ToolbarButton>
+          <ToolbarButton>
+            <>
+              <RotateCw className="w-4 h-4" /> Refresh
+            </>
+          </ToolbarButton>
+          <ToolbarDropdown
+            label="View"
+            icon={<Eye className="w-4 h-4" />}
+            items={[
+              {
+                icon: <ChartArea className="w-4 h-4" />,
+                label: "Show chart",
+              },
+              {
+                icon: <List className="w-4 h-4" />,
+                label: "Focused View",
+              },
+            ]}
+          />
+          <ToolbarDropdown
+            label="More"
+            icon={<MoreHorizontal className="w-4 h-4" />}
+            items={[
+              {
+                icon: <ShieldHalf className="w-4 h-4" />,
+                label: "Collaborate",
+              },
+              {
+                icon: <Trash2 className="w-4 h-4" />,
+                label: "Delete",
+              },
+            ]}
+          />
+        </div>
+        {/** */}
+        <MoreVertical className="w-4 h-4 mx-3 hidden md:block" />
+        {/** */}
+        <div className="flex gap-1 items-center">
+          <div className="items-center gap-1 hidden lg:flex">
+            <ToolbarButton border>
+              <>
+                <ChartPie className="w-4 h-4" /> Smart data
+              </>
+            </ToolbarButton>
+            <ToolbarButton border>
+              <>
+                <ListFilter className="w-4 h-4" /> Edit filters
+              </>
+            </ToolbarButton>
+            <ToolbarButton border>
+              <>
+                <Columns4 className="w-4 h-4" /> Edit columns
+              </>
+            </ToolbarButton>
+          </div>
+          <ToolbarDropdown
+            label=""
+            icon={<Share className="w-4 h-4" />}
+            className="bg-blue-600 text-white"
+            items={[
+              {
+                icon: <Share2 className="w-4 h-4" />,
+                label: "Share as file",
+              },
+              {
+                icon: <Trash2 className="w-4 h-4" />,
+                label: "Delete",
+              },
+            ]}
+          />
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 };
 

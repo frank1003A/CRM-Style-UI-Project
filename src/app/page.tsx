@@ -78,7 +78,7 @@ function Header() {
           and the rest can be achieved by focusing on the top 20 leads.
         </h1>
       </div>
-      <div className="ml-auto my-2 xl:my-0 w-full flex items-center justify-center">
+      <div className="ml-0 py-2 xl:py-0 xl:ml-auto my-2 xl:my-0 w-full flex items-center overflow-x-auto md:overflow-x-hidden">
         <PipelineProgress />
       </div>
     </div>

@@ -22,7 +22,7 @@ const PipelineProgress = ({
     return `${(amount / target) * 100}%`;
   };
   return (
-    <div className="w-full max-w-4xl p-1">
+    <div className="w-full max-w-4xl p-1 min-w-[520px] md:min-w-0">
       <div className="flex justify-between items-center mb-1">
         <div className="text-[10px] text-gray-600">1 month until Q4 ends</div>
         <div className="flex items-center gap-2">
@@ -46,7 +46,7 @@ const PipelineProgress = ({
         ))}
       </div>
 
-      <div className="flex flex-wrap xl:flex-nowrap gap-4 mt-1">
+      <div className="flex flex-wrap md:flex-nowrap gap-4 mt-1">
         {stages.map((stage) => (
           <div key={stage.name} className="flex items-center gap-1">
             <div className={`w-2 h-2 rounded-full ${stage.color}`} />
