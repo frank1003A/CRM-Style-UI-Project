@@ -87,7 +87,7 @@ function Header() {
 
 function FirstHalf() {
   return (
-    <div className="h-full flex flex-col gap-2 w-full xl:w-[65%]">
+    <div className="h-fit flex flex-col gap-2 w-full xl:w-[65%]">
       <h2 className="text-xs mx-4">
         Copilot has pinpointed 20 key leads that show strong purchase intent and
         are actively engaging. These leads need your focus.
@@ -105,7 +105,7 @@ function Separator() {
 
 function SecondHalf() {
   return (
-    <div className="h-full px-0 flex flex-col gap-2 min-h-0 w-full">
+    <div className="h-fit px-0 flex flex-col gap-2 min-h-0 w-full">
       <h2 className="text-xs px-2">Other key activities</h2>
       <ActivitiesList activities={otherKeyActivity} />
     </div>
@@ -118,7 +118,7 @@ function ActivitiesList({
   activities: typeof otherKeyActivity;
 }) {
   return (
-    <div className="flex flex-col gap-2 px-4 h-full mt-2">
+    <div className="flex h-fit flex-col gap-2 px-4 mt-2">
       {activities.map((activity) => (
         <ActivityCard key={activity.title} activity={activity} />
       ))}
