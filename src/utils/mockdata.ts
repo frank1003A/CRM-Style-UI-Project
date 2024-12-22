@@ -29,8 +29,8 @@ import {
 import {
   KeyActivity,
   Lead,
+  PipelineProgressProps,
   SidebarMenuItem,
-  StatData,
   TableData,
 } from "./type";
 
@@ -340,7 +340,7 @@ export const otherKeyActivity: KeyActivity[] = [
   },
 ];
 
-export const statData: StatData = {
+export const statData: PipelineProgressProps = {
   target: 45000000,
   stages: [
     { name: "Won", amount: 18000000, color: "bg-emerald-500" },

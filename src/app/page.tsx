@@ -5,7 +5,7 @@ import PipelineProgress from "@/components/dashboard/pipeline-progress";
 import TopBar from "@/components/dashboard/top-bar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-import { openLeads, otherKeyActivity, statData } from "@/utils/mockdata";
+import { openLeads, otherKeyActivity } from "@/utils/mockdata";
 import { Menu, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -79,7 +79,7 @@ function Header() {
         </h1>
       </div>
       <div className="ml-auto my-2 xl:my-0 w-full flex items-center justify-center">
-        <PipelineProgress stages={statData.stages} target={statData.target} />
+        <PipelineProgress />
       </div>
     </div>
   );

@@ -60,7 +60,7 @@ type Stage = {
   color: string;
 };
 
-export type StatData = {
-  target: number;
-  stages: Stage[];
+type PipelineProgressProps = {
+  target?: number;
+  stages?: Stage[];
 };

@@ -1,12 +1,15 @@
-import { StatData } from "@/utils/type";
+import { PipelineProgressProps } from "@/utils/type";
 
 const PipelineProgress = ({
-  target,
-  stages,
-}: {
-  target: number;
-  stages: StatData["stages"];
-}) => {
+  target = 45000000,
+  stages = [
+    { name: "Won", amount: 18000000, color: "bg-emerald-500" },
+    { name: "Committed", amount: 8000000, color: "bg-blue-500" },
+    { name: "Best case", amount: 7000000, color: "bg-purple-500" },
+    { name: "Qualified", amount: 3000000, color: "bg-amber-500" },
+    { name: "Leads", amount: 75000000, color: "bg-gray-300" },
+  ],
+}: PipelineProgressProps) => {
   const totalAmount = stages
     .filter((stage) => stage.name !== "Leads")
     .reduce((sum, stage) => sum + stage.amount, 0);
