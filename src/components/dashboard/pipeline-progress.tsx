@@ -1,3 +1,5 @@
+"use client";
+
 import { PipelineProgressProps } from "@/utils/type";
 
 const PipelineProgress = ({
