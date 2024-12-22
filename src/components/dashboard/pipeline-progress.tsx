@@ -1,3 +1,4 @@
+"use client";
 import { StatData } from "@/utils/type";
 
 const PipelineProgress = ({ target, stages }: StatData) => {
