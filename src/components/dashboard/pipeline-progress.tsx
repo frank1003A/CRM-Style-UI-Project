@@ -1,7 +1,12 @@
-"use client";
 import { StatData } from "@/utils/type";
 
-const PipelineProgress = ({ target, stages }: StatData) => {
+const PipelineProgress = ({
+  target,
+  stages,
+}: {
+  target: number;
+  stages: StatData["stages"];
+}) => {
   const totalAmount = stages
     .filter((stage) => stage.name !== "Leads")
     .reduce((sum, stage) => sum + stage.amount, 0);
@@ -32,7 +37,7 @@ const PipelineProgress = ({ target, stages }: StatData) => {
             key={stage.name}
             style={{ width: calculateWidth(stage.amount) }}
             className={`${stage.color} h-full transition-all duration-300 ease-in-out`}
-          ></div>
+          />
         ))}
       </div>
 
