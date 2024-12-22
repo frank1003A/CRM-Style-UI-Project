@@ -1,9 +1,10 @@
 "use client";
 
+import { useSidebar } from "@/app/context/sidebar-context";
 import { cn } from "@/lib/utils";
 import { sidebarMenuItems } from "@/utils/mockdata";
 import { SidebarMenuItem } from "@/utils/type";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -37,22 +38,40 @@ interface SidebarItemProps {
 }
 
 const SidebarHeader = ({ collapse, toggleCollapse }: SideHeaderProps) => {
+  const { toggleMobile } = useSidebar();
   return (
-    <div
-      className={cn(
-        collapse ? "px-3" : "px-5",
-        "flex items-center w-full mb-2"
-      )}
-    >
-      <Button
-        className="text-muted-foreground"
-        size={"icon"}
-        variant={"ghost"}
-        onClick={toggleCollapse}
+    <>
+      <div
+        className={cn(
+          collapse ? "px-3" : "px-5",
+          "items-center w-full mb-2 hidden md:flex"
+        )}
       >
-        <Menu />
-      </Button>
-    </div>
+        <Button
+          className="text-muted-foreground"
+          size={"icon"}
+          variant={"ghost"}
+          onClick={toggleCollapse}
+        >
+          <Menu />
+        </Button>
+      </div>
+      <div
+        className={cn(
+          collapse ? "px-3" : "px-5",
+          "items-center w-full mb-2 md:hidden"
+        )}
+      >
+        <Button
+          className="text-muted-foreground"
+          size={"icon"}
+          variant={"ghost"}
+          onClick={toggleMobile}
+        >
+          <X />
+        </Button>
+      </div>
+    </>
   );
 };
 
@@ -178,7 +197,11 @@ const SidebarItem = ({ item, collapse, isSubMenu }: SidebarItemProps) => {
 };
 
 const Sidebar = () => {
-  const [collapse, setCollapse] = useState(false);
+  const {
+    isCollapsed: collapse,
+    setIsCollapsed: setCollapse,
+    isMobileOpen,
+  } = useSidebar();
 
   const groupedMenuItems: GroupedMenuItems =
     sidebarMenuItems.reduce<GroupedMenuItems>((groups, item) => {
@@ -193,22 +216,28 @@ const Sidebar = () => {
   const toggleCollapse = () => setCollapse(!collapse);
 
   return (
-    <aside
-      className={cn(
-        collapse ? "w-16" : "w-56",
-        "bg-neutral-100 hidden md:block py-4 h-full border-r transition-all overflow-y-auto no-scrollbar"
+    <>
+      {isMobileOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"></div>
       )}
-    >
-      <SidebarHeader collapse={collapse} toggleCollapse={toggleCollapse} />
-      {Object.keys(groupedMenuItems).map((category) => (
-        <SidebarCategory
-          key={category}
-          category={category}
-          items={groupedMenuItems[category]}
-          collapse={collapse}
-        />
-      ))}
-    </aside>
+      <aside
+        className={cn(
+          collapse ? "w-16" : "w-56",
+          isMobileOpen ? "translate-x-0" : "-translate-x-full",
+          "bg-neutral-100 fixed md:relative md:translate-x-0 z-50 md:z-0 py-4 h-full border-r transition-all overflow-y-auto no-scrollbar"
+        )}
+      >
+        <SidebarHeader collapse={collapse} toggleCollapse={toggleCollapse} />
+        {Object.keys(groupedMenuItems).map((category) => (
+          <SidebarCategory
+            key={category}
+            category={category}
+            items={groupedMenuItems[category]}
+            collapse={collapse}
+          />
+        ))}
+      </aside>
+    </>
   );
 };
 

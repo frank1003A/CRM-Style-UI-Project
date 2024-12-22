@@ -148,7 +148,7 @@ const TopBar = ({
           ]}
         />
       </div>
-      <div className="gap-1 items-center ml-auto hidden md:flex lg:hidden">
+      <div className="gap-1 items-center ml-auto hidden md:flex xl:hidden">
         <ToolbarButton>
           <>
             <Plus className="w-4 h-4" /> New
@@ -182,7 +182,7 @@ const TopBar = ({
         />
       </div>
       {/** */}
-      <div className="gap-1 items-center ml-auto hidden lg:flex">
+      <div className="gap-1 items-center ml-auto hidden xl:flex">
         <ToolbarButton>
           <>
             <Plus className="w-4 h-4" /> New
