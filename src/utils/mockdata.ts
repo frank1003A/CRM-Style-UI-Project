@@ -350,3 +350,21 @@ export const statData: PipelineProgressProps = {
     { name: "Leads", amount: 75000000, color: "bg-gray-300" },
   ],
 };
+
+export const cardData = [
+  {
+    title: "Decision maker",
+    value: "Yes",
+    icon: "/cards/dm.png",
+  },
+  {
+    title: "Potential deal value",
+    value: "$1M",
+    icon: "/cards/pdv.png",
+  },
+  {
+    title: "Intent",
+    value: "High",
+    icon: "/cards/it.png",
+  },
+];

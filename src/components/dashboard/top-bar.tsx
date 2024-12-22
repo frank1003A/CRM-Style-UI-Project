@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import {
   ChartArea,
@@ -42,8 +44,26 @@ const ToolbarButton = ({
   toolTip?: string;
 }) => {
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
+    <>
+      {toolTip ? (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={onClick}
+              className={cn(
+                "px-2 py-1 flex items-center justify-center gap-2 text-sm rounded-sm border",
+                border ? "border-border" : "border-transparent",
+                "hover:border-border"
+              )}
+            >
+              {children}
+            </button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{toolTip}</p>
+          </TooltipContent>
+        </Tooltip>
+      ) : (
         <button
           onClick={onClick}
           className={cn(
@@ -54,11 +74,8 @@ const ToolbarButton = ({
         >
           {children}
         </button>
-      </TooltipTrigger>
-      <TooltipContent>
-        <p>{toolTip}</p>
-      </TooltipContent>
-    </Tooltip>
+      )}
+    </>
   );
 };
 
@@ -122,7 +139,7 @@ const TopBar = ({
       <div className="bg-white w-full shadow-md rounded-[5px] p-1 flex items-center overflow-x-auto">
         <ToolbarButton toolTip="My Open Leads" onClick={toggleExpand}>
           <>
-            <span className="md:hidden">Leads</span>
+            <span className="xl:hidden">Leads</span>
             <span className="hidden xl:inline">My open leads</span>
             <ChevronDown
               className={cn(

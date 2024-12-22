@@ -1,10 +1,14 @@
+"use client";
+
 import { useLeadsContext } from "@/app/context/lead-context";
 import { cn } from "@/lib/utils";
 import { openLeads } from "@/utils/mockdata";
 import { Lead } from "@/utils/type";
 import { Globe, Sparkles } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { cardData } from "../../utils/mockdata";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   Carousel,
@@ -132,7 +136,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                     return (
                       <div
                         key={lead.id}
-                        className="w-full transition-all md:w-[600px] px-2 py-6 md:p-6 z-50 relative border-2 border-transparent shadow-2xl border-purple-800 rounded-xl bg-white"
+                        className="w-full transition-all md:w-[600px] px-2 py-6 md:p-6 z-50 relative border-2 border-transparent shadow-2xl border-purple-800 rounded-none md:rounded-xl bg-white"
                       >
                         <div className="w-full h-full flex flex-col gap-4">
                           <div className="flex items-center gap-2">
@@ -178,25 +182,25 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                 espresso machines for her in-store coffee shops.
                               </span>
                             </div>
-                            <Tabs defaultValue="engage" className="w-full">
-                              <TabsList className="rounded-md bg-white px-2 w-full flex items-center justify-start">
-                                <TabsTrigger
-                                  className="border-none"
-                                  value="engage"
-                                >
-                                  Engage
-                                </TabsTrigger>
+                            <Tabs
+                              defaultValue="research"
+                              className="w-full p-0"
+                            >
+                              <TabsList className="rounded-md shadow-lg bg-white py-0 px-2 w-full flex items-center justify-start">
+                                <TabsTrigger value="engage">Engage</TabsTrigger>
                                 <TabsTrigger value="research">
                                   Research
                                 </TabsTrigger>
                               </TabsList>
                               <TabsContent value="engage">
-                                Make changes to your account here.
+                                <div className="w-full min-h-20 flex items-center justify-center">
+                                  <span>No Engagement</span>
+                                </div>
                               </TabsContent>
                               <TabsContent value="research">
                                 <div className="w-full flex flex-col gap-3">
                                   <div className="shadow-lg bg-white w-full rounded-xl p-3 border">
-                                    <div className="w-full rounded-xl p-2 bg-gradient-to-r from-blue-100 to-blue-50">
+                                    <div className="w-full flex flex-col gap-3 rounded-lg p-2 bg-gradient-to-r from-blue-100 to-blue-50">
                                       <div className="flex flex-col w-full">
                                         <span className="text-blue-800 text-sm">
                                           Why i picked this lead
@@ -219,6 +223,31 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                             coffee shops.
                                           </li>
                                         </ul>
+                                      </div>
+                                      <div className="flex items-center gap-3 w-full">
+                                        {cardData.map((card, index) => (
+                                          <div
+                                            key={`${card.title}_${index}`}
+                                            className="flex items-center gap-2 bg-white p-2 shadow-lg rounded-lg"
+                                          >
+                                            <div className="flex items-center justify-center">
+                                              <Image
+                                                src={card.icon}
+                                                width={40}
+                                                height={40}
+                                                alt={`${card.title} image`}
+                                              />
+                                            </div>
+                                            <div className="flex flex-col gap-1">
+                                              <span className="text-xs">
+                                                {card.title}
+                                              </span>
+                                              <span className="text-xs font-bold text-blue-600">
+                                                {card.value}
+                                              </span>
+                                            </div>
+                                          </div>
+                                        ))}
                                       </div>
                                     </div>
                                   </div>
@@ -252,11 +281,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             ))}
           </CarouselContent>
           <CarouselPrevious
-            className="absolute left-0 md:-left-4 text-blue-600 shadow-lg"
+            className="absolute left-4 md:-left-4 top-1/2 -translate-y-1/2 text-blue-600"
             onClick={handlePrev}
           />
           <CarouselNext
-            className="absolute right-0 md:-right-4 text-blue-600 shadow-lg"
+            className="absolute right-4 md:-right-4 top-1/2 -translate-y-1/2 text-blue-600"
             onClick={handleNext}
           />
         </Carousel>
