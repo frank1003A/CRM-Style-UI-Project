@@ -178,7 +178,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                 espresso machines for her in-store coffee shops.
                               </span>
                             </div>
-                            <Tabs defaultValue="account" className="w-full">
+                            <Tabs defaultValue="engage" className="w-full">
                               <TabsList className="rounded-md bg-white px-2 w-full flex items-center justify-start">
                                 <TabsTrigger
                                   className="border-none"
