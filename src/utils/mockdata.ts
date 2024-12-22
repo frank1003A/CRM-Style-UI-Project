@@ -26,7 +26,13 @@ import {
   Users,
   Users2,
 } from "lucide-react";
-import { KeyActivity, Lead, SidebarMenuItem, TableData } from "./type";
+import {
+  KeyActivity,
+  Lead,
+  SidebarMenuItem,
+  StatData,
+  TableData,
+} from "./type";
 
 export const sidebarMenuItems: SidebarMenuItem[] = [
   { id: 1, label: "Home", href: "/", icon: Home },
@@ -333,3 +339,14 @@ export const otherKeyActivity: KeyActivity[] = [
     icon: CalendarDays,
   },
 ];
+
+export const statData: StatData = {
+  target: 45000000,
+  stages: [
+    { name: "Won", amount: 18000000, color: "bg-emerald-500" },
+    { name: "Committed", amount: 8000000, color: "bg-blue-500" },
+    { name: "Best case", amount: 7000000, color: "bg-purple-500" },
+    { name: "Qualified", amount: 3000000, color: "bg-amber-500" },
+    { name: "Leads", amount: 75000000, color: "bg-gray-300" },
+  ],
+};

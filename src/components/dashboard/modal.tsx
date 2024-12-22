@@ -1,3 +1,4 @@
+import { useLeadsContext } from "@/app/context/lead-context";
 import { cn } from "@/lib/utils";
 import { openLeads } from "@/utils/mockdata";
 import { Lead } from "@/utils/type";
@@ -18,10 +19,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  activelead: number;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, activelead }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+  const { activeIndex: activelead } = useLeadsContext();
   const modalRef = useRef<HTMLDivElement>(null);
 
   const [api, setApi] = useState<CarouselApi>();

@@ -1,3 +1,4 @@
+import { useLeadsContext } from "@/app/context/lead-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { Lead } from "@/utils/type";
@@ -26,7 +27,7 @@ const LeadsCarousel: React.FC<LeadsCarouselProps> = ({
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
   const [openModal, setOpenModal] = useState(false);
-  const [activeLead, setActiveLead] = useState<number>(0);
+  const { setActiveIndex } = useLeadsContext();
 
   const [dynamicItemsPerGroup, setDynamicItemsPerGroup] =
     useState(itemsPerGroup);
@@ -89,8 +90,8 @@ const LeadsCarousel: React.FC<LeadsCarouselProps> = ({
                     onClick={() => {
                       const calculatedIndex =
                         groupIndex * itemsPerGroup + leadIndex;
+                      setActiveIndex(calculatedIndex);
                       setOpenModal(true);
-                      setActiveLead(calculatedIndex);
                     }}
                     className="flex flex-col gap-2 border rounded-xl shadow-sm p-4 flex-1 w-full h-full max-h-[300px]"
                   >
@@ -151,12 +152,8 @@ const LeadsCarousel: React.FC<LeadsCarouselProps> = ({
         ))}
       </div>
 
-      {openModal && activeLead && (
-        <Modal
-          activelead={activeLead}
-          isOpen={openModal}
-          onClose={() => setOpenModal(false)}
-        />
+      {openModal && (
+        <Modal isOpen={openModal} onClose={() => setOpenModal(false)} />
       )}
     </>
   );

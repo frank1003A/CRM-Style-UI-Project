@@ -53,3 +53,14 @@ export type KeyActivity = {
   avatar: string;
   icon: LucideIcon;
 };
+
+type Stage = {
+  name: string;
+  amount: number;
+  color: string;
+};
+
+export type StatData = {
+  target: number;
+  stages: Stage[];
+};
