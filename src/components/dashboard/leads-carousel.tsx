@@ -3,7 +3,6 @@
 import { useLeadsContext } from "@/app/context/lead-context";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useCarouselState } from "@/hooks/use-carousel-state";
-import { cn } from "@/lib/utils";
 import { Lead } from "@/utils/type";
 import { Dot, Sparkles } from "lucide-react";
 import { useState } from "react";
@@ -14,6 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
+import { CarouselDots } from "./carousel-dots";
 import Modal from "./modal";
 
 interface LeadsCarouselProps {
@@ -29,11 +29,6 @@ interface LeadsCarouselProps {
 interface LeadCardProps {
   lead: Lead;
   onClick: () => void;
-}
-
-interface CarouselDotsProps {
-  count: number;
-  current: number;
 }
 
 const LeadCard: React.FC<LeadCardProps> = ({ lead, onClick }) => {
@@ -71,23 +66,6 @@ const LeadCard: React.FC<LeadCardProps> = ({ lead, onClick }) => {
         <Dot />
         <span>{lead.tags[1]}</span>
       </div>
-    </div>
-  );
-};
-
-const CarouselDots: React.FC<CarouselDotsProps> = ({ count, current }) => {
-  return (
-    <div className="py-2 flex items-center w-full justify-center gap-1 text-center text-sm text-muted-foreground">
-      {Array.from({ length: count }).map((_, index) => (
-        <div
-          key={index}
-          className={cn(
-            "w-1 h-1 rounded-full transition-all",
-            index + 1 === current ? "bg-blue-900 w-8" : "bg-slate-300"
-          )}
-          aria-label={`Go to slide ${index + 1}`}
-        />
-      ))}
     </div>
   );
 };
